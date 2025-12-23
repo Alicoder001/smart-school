@@ -25,7 +25,7 @@ export function DeleteEntityFeature({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Modal.Header title={`Delete ${entityType}`} onClose={onClose} />
+      <Modal.Header title={`Delete ${entityType}`} />
       <Modal.Body>
         <div className="p-4 flex flex-col gap-4 text-center">
           <p className="font-medium text-gray-700">

@@ -29,9 +29,9 @@ export function DashboardLayoutWidget({
       </aside>
 
       {/* RIGHT - MAIN CONTENT */}
-      <main className="w-[86%] md:w-[92%] lg:w-[84%] xl:w-[86%] bg-[#F7F8FA] overflow-y-auto flex flex-col h-full scroll-smooth">
+      <main className="flex-1 bg-[#F7F8FA] overflow-y-auto flex flex-col h-full scroll-smooth">
         <TopNavbar />
-        <div className="flex-1">{children}</div>
+        <div className="flex-1 flex flex-col w-full">{children}</div>
       </main>
     </div>
   );

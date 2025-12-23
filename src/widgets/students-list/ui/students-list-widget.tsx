@@ -90,7 +90,7 @@ export function StudentsListWidget({ data }: StudentsListWidgetProps) {
   );
 
   return (
-    <div className="bg-white p-4 rounded-xl flex-1 m-4 mt-0 shadow-sm">
+    <div className="bg-white p-4 rounded-xl flex-1 mx-4 mb-4 mt-0 shadow-sm">
       <div className="flex items-center justify-between mb-6">
         <h1 className="hidden md:block text-xl font-bold text-gray-800">
           All Students
