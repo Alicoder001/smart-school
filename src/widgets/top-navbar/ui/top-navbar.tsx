@@ -16,8 +16,10 @@ export function TopNavbar() {
           placeholder="Search..."
           className="w-[200px] p-2 bg-transparent outline-none"
         />
+        <span className="hidden sm:block text-xs font-medium bg-gray-100 text-gray-400 px-2 py-0.5 rounded-full border border-gray-200">
+          v1.0.0
+        </span>
       </div>
-
       {/* ICONS AND USER */}
       <div className="flex items-center gap-6 justify-end w-full md:w-auto">
         <div className="bg-white rounded-full w-7 h-7 flex items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors shadow-sm">
