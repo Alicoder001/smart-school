@@ -1,0 +1,7 @@
+﻿src/shared/ui/calendar.tsx(12,40): error TS2307: Cannot find module '@/shared/ui/ui/button' or its corresponding type declarations.
+src/shared/ui/form.tsx(16,23): error TS2307: Cannot find module '@/shared/ui/ui/label' or its corresponding type declarations.
+src/shared/ui/pagination.tsx(5,45): error TS2307: Cannot find module '@/shared/ui/ui/button' or its corresponding type declarations.
+src/shared/ui/pagination.tsx(68,5): error TS2783: 'size' is specified more than once, so this usage will be overwritten.
+src/shared/ui/pagination.tsx(84,5): error TS2783: 'size' is specified more than once, so this usage will be overwritten.
+src/widgets/parents-list/ui/parents-list-widget.tsx(97,14): error TS2322: Type '{ columns: ({ header: string; accessor: string; className?: undefined; } | { header: string; accessor: string; className: string; })[]; renderRow: (item: Parent) => Element; data: Parent[]; }' is not assignable to type 'IntrinsicAttributes & HTMLAttributes<HTMLTableElement> & RefAttributes<HTMLTableElement>'.
+  Property 'columns' does not exist on type 'IntrinsicAttributes & HTMLAttributes<HTMLTableElement> & RefAttributes<HTMLTableElement>'.

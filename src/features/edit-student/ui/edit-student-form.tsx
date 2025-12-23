@@ -1,7 +1,7 @@
 "use client";
 
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import Image from "next/image";
 import {
   studentSchema,
@@ -9,6 +9,21 @@ import {
 } from "../../create-student/model/validation";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/shared/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui/select";
 
 export interface EditStudentFormProps {
   data: any;
@@ -21,11 +36,7 @@ export function EditStudentForm({
   onSuccess,
   onCancel,
 }: EditStudentFormProps) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<StudentSchema>({
+  const form = useForm<StudentSchema>({
     resolver: zodResolver(studentSchema),
     defaultValues: data,
   });
@@ -36,129 +47,212 @@ export function EditStudentForm({
   };
 
   return (
-    <form className="flex flex-col gap-8" onSubmit={handleSubmit(onSubmit)}>
-      <h1 className="text-xl font-semibold">Edit Student</h1>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-8"
+      >
+        <h1 className="text-xl font-semibold">Edit Student</h1>
 
-      <div className="space-y-4">
-        <span className="text-xs text-gray-400 font-medium block">
-          Authentication Information
-        </span>
-        <div className="flex justify-between flex-wrap gap-4">
-          <Input
-            label="Username"
-            error={errors.username?.message}
-            {...register("username")}
-            className="md:w-[31%]"
-          />
-          <Input
-            label="Email"
-            type="email"
-            error={errors.email?.message}
-            {...register("email")}
-            className="md:w-[31%]"
-          />
-          <Input
-            label="Password"
-            type="password"
-            placeholder="Leave empty to keep current"
-            error={errors.password?.message}
-            {...register("password")}
-            className="md:w-[31%]"
-          />
-        </div>
-      </div>
-
-      <div className="space-y-4">
-        <span className="text-xs text-gray-400 font-medium block">
-          Personal Information
-        </span>
-        <div className="flex justify-between flex-wrap gap-4">
-          <Input
-            label="First Name"
-            error={errors.firstName?.message}
-            {...register("firstName")}
-            className="md:w-[31%]"
-          />
-          <Input
-            label="Last Name"
-            error={errors.lastName?.message}
-            {...register("lastName")}
-            className="md:w-[31%]"
-          />
-          <Input
-            label="Phone"
-            error={errors.phone?.message}
-            {...register("phone")}
-            className="md:w-[31%]"
-          />
-          <Input
-            label="Address"
-            error={errors.address?.message}
-            {...register("address")}
-            className="md:w-[31%]"
-          />
-          <Input
-            label="Blood Type"
-            error={errors.bloodType?.message}
-            {...register("bloodType")}
-            className="md:w-[31%]"
-          />
-          <Input
-            label="Birthday"
-            type="date"
-            error={errors.birthday?.message}
-            {...register("birthday")}
-            className="md:w-[31%]"
-          />
-
-          <div className="flex flex-col gap-2 w-full md:w-[31%]">
-            <label className="text-sm font-medium text-gray-700">Sex</label>
-            <select
-              className="ring-[1.5px] ring-gray-300 p-2 rounded-md text-sm w-full focus:outline-none focus:ring-2 focus:ring-lamaPurple"
-              {...register("sex")}
-              defaultValue={data?.sex}
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-            {errors.sex?.message && (
-              <p className="text-xs text-red-500">{errors.sex.message}</p>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-2 w-full md:w-[31%] justify-center">
-            <label
-              className="text-sm font-medium text-gray-700 flex items-center gap-2 cursor-pointer hover:opacity-70"
-              htmlFor="edit-stud-img"
-            >
-              <Image src="/upload.png" alt="" width={28} height={28} />
-              <span>Update photo</span>
-            </label>
-            <input
-              type="file"
-              id="edit-stud-img"
-              {...register("img")}
-              className="hidden"
+        <div className="space-y-4">
+          <span className="text-xs text-gray-400 font-medium block">
+            Authentication Information
+          </span>
+          <div className="flex justify-between flex-wrap gap-4">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Username" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            {errors.img?.message && (
-              <p className="text-xs text-red-500">
-                {errors.img.message.toString()}
-              </p>
-            )}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="Email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Leave empty to keep current"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         </div>
-      </div>
 
-      <div className="flex justify-end gap-4 mt-4">
-        {onCancel && (
-          <Button type="button" variant="ghost" onClick={onCancel}>
-            Cancel
-          </Button>
-        )}
-        <Button type="submit" variant="primary">
-          Update Student
-        </Button>
-      </div>
-    </form>
+        <div className="space-y-4">
+          <span className="text-xs text-gray-400 font-medium block">
+            Personal Information
+          </span>
+          <div className="flex justify-between flex-wrap gap-4">
+            <FormField
+              control={form.control}
+              name="firstName"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>First Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="First Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Last Name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Phone" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="bloodType"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Blood Type</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Blood Type" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="birthday"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Birthday</FormLabel>
+                  <FormControl>
+                    <Input type="date" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="sex"
+              render={({ field }) => (
+                <FormItem className="w-full md:w-[31%]">
+                  <FormLabel>Sex</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select sex" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="img"
+              render={({ field: { value, onChange, ...fieldProps } }) => (
+                <FormItem className="w-full md:w-[31%] flex flex-col justify-end">
+                  <FormLabel
+                    className="flex items-center gap-2 cursor-pointer hover:opacity-70"
+                    htmlFor="edit-stud-img"
+                  >
+                    <Image src="/upload.png" alt="" width={28} height={28} />
+                    <span>Update photo</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      {...fieldProps}
+                      type="file"
+                      id="edit-stud-img"
+                      className="hidden"
+                      onChange={(event) => {
+                        onChange(event.target.files && event.target.files[0]);
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-4 mt-4">
+          {onCancel && (
+            <Button type="button" variant="ghost" onClick={onCancel}>
+              Cancel
+            </Button>
+          )}
+          <Button type="submit">Update Student</Button>
+        </div>
+      </form>
+    </Form>
   );
 }

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Table } from "@/shared/ui/table";
+import { Table } from "@/shared/ui/list-table";
 import { TableSearch } from "@/features/table-search";
 import { FilterButton, SortButton } from "@/features/entity-filters";
 import { Pagination } from "@/shared/ui/pagination";
@@ -11,7 +11,7 @@ import { CreateTeacherForm } from "@/features/create-teacher";
 import { EditTeacherForm } from "@/features/edit-teacher";
 import { DeleteEntityFeature } from "@/features/delete-entity";
 import { getCurrentRole } from "@/entities/user";
-import { Modal } from "@/shared/ui/modal";
+import { Dialog, DialogContent } from "@/shared/ui/dialog";
 import { Teacher } from "@/entities/teacher";
 
 export interface TeachersListWidgetProps {
@@ -128,28 +128,36 @@ export function TeachersListWidget({ data }: TeachersListWidgetProps) {
       </div>
 
       {/* MODALS */}
-      <Modal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)}>
-        <CreateTeacherForm
-          onCancel={() => setIsCreateOpen(false)}
-          onSuccess={(data) => {
-            console.log("Success:", data);
-            setIsCreateOpen(false);
-          }}
-        />
-      </Modal>
-
-      <Modal isOpen={!!editingTeacher} onClose={() => setEditingTeacher(null)}>
-        {editingTeacher && (
-          <EditTeacherForm
-            data={editingTeacher}
-            onCancel={() => setEditingTeacher(null)}
+      <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+        <DialogContent className="max-w-[90%] md:max-w-2xl overflow-y-auto max-h-[90vh]">
+          {/* Form handles its own title and footer */}
+          <CreateTeacherForm
+            onCancel={() => setIsCreateOpen(false)}
             onSuccess={(data) => {
-              console.log("Updated:", data);
-              setEditingTeacher(null);
+              console.log("Success:", data);
+              setIsCreateOpen(false);
             }}
           />
-        )}
-      </Modal>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={!!editingTeacher}
+        onOpenChange={(open) => !open && setEditingTeacher(null)}
+      >
+        <DialogContent className="max-w-[90%] md:max-w-2xl overflow-y-auto max-h-[90vh]">
+          {editingTeacher && (
+            <EditTeacherForm
+              data={editingTeacher}
+              onCancel={() => setEditingTeacher(null)}
+              onSuccess={(data) => {
+                console.log("Updated:", data);
+                setEditingTeacher(null);
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
 
       <DeleteEntityFeature
         entityType="teacher"
